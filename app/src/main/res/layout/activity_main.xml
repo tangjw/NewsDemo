@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zonsim.newsdemo.MainActivity">
+    
+    
+    <com.zonsim.newsdemo.widght.XListView
+        android:id="@+id/lv_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    
+    
+    </com.zonsim.newsdemo.widght.XListView>
+</RelativeLayout>
