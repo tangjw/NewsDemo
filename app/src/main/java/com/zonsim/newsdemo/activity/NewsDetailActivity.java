@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -21,6 +23,7 @@ public class NewsDetailActivity extends Activity {
 	
 	private LinearLayout mProgress;
 	private WebView mWebView;
+	private LinearLayout mNetError;
 	
 	@Override
 	protected void onCreate( Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class NewsDetailActivity extends Activity {
 		setContentView(R.layout.activity_news_detail);
 		mProgress = (LinearLayout) findViewById(R.id.ll_progress);
 		mWebView = (WebView) findViewById(R.id.wv_news);
+		mNetError = (LinearLayout) findViewById(R.id.ll_net_error);
 		
 		String id = getIntent().getStringExtra("id");
 		initSetting();
@@ -50,7 +54,15 @@ public class NewsDetailActivity extends Activity {
 		settings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
 		
 		//设置webview的页面导航
-		mWebView.setWebViewClient(new WebViewClient());
+		mWebView.setWebViewClient(new WebViewClient(){
+			@Override
+			public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+				super.onReceivedError(view, request, error);
+//				Toast.makeText(NewsDetailActivity.this, "网络出错了", Toast.LENGTH_SHORT).show();
+				mWebView.setVisibility(View.GONE);
+				mNetError.setVisibility(View.VISIBLE);
+			}
+		});
 		mWebView.requestFocusFromTouch();
 		
 		mWebView.setWebChromeClient(new WebChromeClient() {

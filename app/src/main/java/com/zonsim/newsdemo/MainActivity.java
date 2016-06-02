@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 import com.zonsim.newsdemo.activity.NewsDetailActivity;
 import com.zonsim.newsdemo.bean.BannerListBean;
 import com.zonsim.newsdemo.bean.BaseResponseBean;
@@ -90,7 +91,7 @@ public class MainActivity extends Activity implements XListView.IXListViewListen
 		initView();
 		initData();
 		initListener();
-		
+		MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
 	}
 	
 	/**
@@ -427,9 +428,16 @@ public class MainActivity extends Activity implements XListView.IXListViewListen
 	}
 	
 	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
 	protected void onPause() {
 		super.onPause();
 		delayStart(0, 3000,true);
+		MobclickAgent.onPause(this);
 	}
 }
 

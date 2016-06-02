@@ -3,7 +3,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
     
-    
     <WebView
         android:id="@+id/wv_news"
         android:layout_width="match_parent"
@@ -32,9 +31,29 @@
             android:layout_gravity="center_horizontal"/>
         
         <TextView
-            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="正在拼命加载..."/>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/ll_net_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+        
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="网络出错了"/>
     </LinearLayout>
 </RelativeLayout>

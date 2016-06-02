@@ -121,8 +121,10 @@ public static Request post(String url, Map<String, String> params, Class<? exten
 private static Request request(int method, String url, Map<String, String> params, Class<? extends BaseResponseBean> clazz,
                                int requestCode, ResponseListener listener, boolean flag) {
 	Request request = mInFlightRequests.get(requestCode);
+	
 	if (request == null) {
 		request = makeGsonRequest(method, url + buildGetParam(params), null, clazz, requestCode, listener, flag);
+		
 		//首先尝试解析本地缓存供界面显示，然后再发起网络请求
 		tryLoadCacheResponse(request, requestCode, listener);
 		Log.d(TAG, "Handle request by network!");
@@ -266,7 +268,9 @@ private static Request makeGsonRequest(int method, String url, Map<String, Strin
 			return super.getBody();
 		}
 	};
-	gsonRequest.setRetryPolicy(new DefaultRetryPolicy());//设置默认的重试机制，超时时间，重试次数，重试因子等
+	gsonRequest.setRetryPolicy(new DefaultRetryPolicy(3000,
+			DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+			DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));//设置默认的重试机制，超时时间，重试次数，重试因子等
 	return gsonRequest;
 }
 

@@ -75,13 +75,11 @@ public class XListView extends ListView implements OnScrollListener {
     private int mTotalItemCount;
 
     public XListView(Context context) {
-        super(context);
-        initWithContext(context);
+        this(context, null);
     }
 
     public XListView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initWithContext(context);
+        this(context, attrs, 0);
     }
 
     public XListView(Context context, AttributeSet attrs, int defStyle) {
