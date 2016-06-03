@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class MainActivity extends Activity implements XListView.IXListViewListener {
+public class NewsActivity extends Activity implements XListView.IXListViewListener {
 	
 	private static final int CANCEL_REFRESHING = 201;
 	private static final int POINT_CHANGE = 202;
@@ -66,7 +66,7 @@ public class MainActivity extends Activity implements XListView.IXListViewListen
 			switch (msg.what) {
 			case CANCEL_REFRESHING:
 				if (!(Boolean) msg.obj) {
-					MyToast.show(MainActivity.this, "网络出错了");
+					MyToast.show(NewsActivity.this, "网络出错了");
 				}
 				onLoad();
 				break;
@@ -160,7 +160,7 @@ public class MainActivity extends Activity implements XListView.IXListViewListen
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				
-				Intent intent = new Intent(MainActivity.this, NewsDetailActivity.class);
+				Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
 				intent.putExtra("id", mNews.get(position-2).getId() + "");
 				startActivity(intent);
 			}
@@ -280,7 +280,7 @@ public class MainActivity extends Activity implements XListView.IXListViewListen
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {
-				convertView = View.inflate(MainActivity.this, R.layout.item_newslist, null);
+				convertView = View.inflate(NewsActivity.this, R.layout.item_newslist, null);
 				holder = new ViewHolder();
 				holder.newImg = (ImageView) convertView.findViewById(R.id.iv_new);
 				holder.newTitle = (TextView) convertView.findViewById(R.id.tv_title);
@@ -296,7 +296,7 @@ public class MainActivity extends Activity implements XListView.IXListViewListen
 					R.mipmap.ic_launcher, R.mipmap.ic_launcher);
 			
 			HttpLoader.getImageLoader().get(serverUrl + mNews.get(position).getSummary_image(), imageListener,
-					DensityUtil.dip2px(MainActivity.this,120),DensityUtil.dip2px(MainActivity.this,100));
+					DensityUtil.dip2px(NewsActivity.this,120),DensityUtil.dip2px(NewsActivity.this,100));
 			
 			return convertView;
 		}
@@ -345,7 +345,7 @@ public class MainActivity extends Activity implements XListView.IXListViewListen
 		
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
-			ImageView imageView = new ImageView(MainActivity.this);
+			ImageView imageView = new ImageView(NewsActivity.this);
 			imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
 			ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(imageView,
