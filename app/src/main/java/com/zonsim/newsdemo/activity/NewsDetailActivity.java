@@ -2,6 +2,7 @@ package com.zonsim.newsdemo.activity;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -36,7 +37,10 @@ public class NewsDetailActivity extends Activity {
 		String id = getIntent().getStringExtra("id");
 		initSetting();
 		mWebView.loadUrl("http://118.145.26.215:8090/edu/lianyi/EduNews/everyNewsDetail.do?Id="+id);
-		
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//		    this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+			this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+		}
 	}
 	
 	

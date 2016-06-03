@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+    
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/grzx_view_im1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="9dp"
+        android:background="@drawable/porfile_photo"/>
+    
+    <Button
+        android:id="@+id/grzx_view_im2"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/grzx_view_im1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/selector_test_dialog"
+        android:text="完善个人信息"
+        android:textColor="#535353"
+        android:textSize="10sp"/>
+    
+    <TextView
+        android:id="@+id/grzx_view_tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/grzx_view_im2"
+        android:gravity="center"
+        android:text="138888888"
+        android:textColor="#535353"
+        android:textSize="15sp"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFF"
+        android:orientation="horizontal">
+        
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/porfile_list_icon_01"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的消息"/>
+    
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFF"
+        android:orientation="horizontal">
+        
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/porfile_list_icon_02"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="我的收藏"/>
+    
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFF"
+        android:orientation="horizontal">
+        
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/porfile_list_icon_03"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="意见反馈"/>
+    
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFF"
+        android:orientation="horizontal">
+        
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/porfile_list_icon_04"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="报考信息"/>
+    
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_share"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFF"
+        android:orientation="horizontal">
+        
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/porfile_list_icon_05"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分享好友"/>
+    
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFF"
+        android:orientation="horizontal">
+        
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/porfile_list_icon_06"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退出登陆"/>
+    
+    </LinearLayout>
+
+
+</LinearLayout>

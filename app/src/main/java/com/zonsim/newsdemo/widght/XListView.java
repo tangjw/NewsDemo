@@ -22,12 +22,6 @@ import android.widget.TextView;
 import com.zonsim.newsdemo.R;
 
 
-/**
- * XListView, it's based on <a href="https://github.com/Maxwin-z/XListView-Android">XListView(Maxwin)</a>
- *
- * @author markmjw
- * @date 2013-10-08
- */
 public class XListView extends ListView implements OnScrollListener {
 //    private static final String TAG = "XListView";
 
@@ -75,11 +69,13 @@ public class XListView extends ListView implements OnScrollListener {
     private int mTotalItemCount;
 
     public XListView(Context context) {
-        this(context, null);
+        super(context);
+        initWithContext(context);
     }
 
     public XListView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        initWithContext(context);
     }
 
     public XListView(Context context, AttributeSet attrs, int defStyle) {

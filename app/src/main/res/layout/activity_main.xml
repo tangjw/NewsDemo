@@ -4,14 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewsActivity">
-    
-    
-    <com.zonsim.newsdemo.widght.XListView
-        android:id="@+id/lv_refresh"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <include layout="@layout/title_bar"
+             android:id="@+id/include"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/include">
     
+    </android.support.v4.view.ViewPager>
     
-    </com.zonsim.newsdemo.widght.XListView>
+    <RadioGroup
+        android:id="@+id/rg_bottom_tab"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#EEE"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        
+        <RadioButton
+            android:id="@+id/rb_bottom_1"
+            style="@style/styles_bottom_tab"
+            android:checked="true"
+            android:drawableTop="@drawable/selector_bottom_tab_1"
+            android:text="行业资讯"/>
+        
+        <RadioButton
+            android:id="@+id/rb_bottom_2"
+            style="@style/styles_bottom_tab"
+            android:drawableTop="@drawable/selector_bottom_tab_2"
+            android:text="关于益学"/>
+        
+        <RadioButton
+            android:id="@+id/rb_bottom_3"
+            style="@style/styles_bottom_tab"
+            android:drawableTop="@drawable/selector_bottom_tab_3"
+            android:text="个人中心"/>
+    </RadioGroup>
 </RelativeLayout>

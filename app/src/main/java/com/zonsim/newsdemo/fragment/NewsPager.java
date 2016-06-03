@@ -1,6 +1,5 @@
-package com.zonsim.newsdemo;
+package com.zonsim.newsdemo.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,11 +16,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.umeng.analytics.MobclickAgent;
+import com.zonsim.newsdemo.MyApp;
+import com.zonsim.newsdemo.R;
 import com.zonsim.newsdemo.activity.NewsDetailActivity;
 import com.zonsim.newsdemo.bean.BannerListBean;
 import com.zonsim.newsdemo.bean.BaseResponseBean;
@@ -37,7 +36,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class NewsActivity extends Activity implements XListView.IXListViewListener {
+public class NewsPager extends BaseFragment implements XListView.IXListViewListener {
 	
 	private static final int CANCEL_REFRESHING = 201;
 	private static final int POINT_CHANGE = 202;
@@ -60,46 +59,44 @@ public class NewsActivity extends Activity implements XListView.IXListViewListen
 	private List<BannerListBean.BannerBean> mBanners;
 	private MyPagerAdapter mMyPagerAdapter;
 	
-	private Handler mHandler = new Handler(){
+	private Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case CANCEL_REFRESHING:
-				if (!(Boolean) msg.obj) {
-					MyToast.show(NewsActivity.this, "网络出错了");
-				}
-				onLoad();
-				break;
-			
-			case POINT_CHANGE:
-				int item = mViewPager.getCurrentItem();
-				mViewPager.setCurrentItem(item + 1);
-				mHandler.sendEmptyMessageDelayed(POINT_CHANGE, CHANG_TIME);
-				break;
-			
-			default:
-				break;
+				case CANCEL_REFRESHING:
+					if (!(Boolean) msg.obj) {
+						MyToast.show(MyApp.application, "网络出错了");
+					}
+					onLoad();
+					break;
+				
+				case POINT_CHANGE:
+					int item = mViewPager.getCurrentItem();
+					mViewPager.setCurrentItem(item + 1);
+					mHandler.sendEmptyMessageDelayed(POINT_CHANGE, CHANG_TIME);
+					break;
+				
+				default:
+					break;
 			}
 		}
 	};
 	
-	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		
-		initView();
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View contentView = inflater.inflate(R.layout.pager1_news, null);
+		initView(contentView);
 		initData();
 		initListener();
-		MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
+		
+		return contentView;
 	}
 	
 	/**
 	 * 初始化控件
 	 */
-	private void initView() {
-		mXListView = (XListView) findViewById(R.id.lv_refresh);
+	private void initView(View contentView) {
+		mXListView = (XListView) contentView.findViewById(R.id.lv_refresh);
 		//设置可以下拉刷新
 		mXListView.setPullRefreshEnable(true);
 		//设置可以加载更多
@@ -111,9 +108,9 @@ public class NewsActivity extends Activity implements XListView.IXListViewListen
 		//设置自动刷新
 //		mXListView.autoRefresh();
 		
-		View view = LayoutInflater.from(this).inflate(R.layout.vp_header, null);
+		View view = LayoutInflater.from(MyApp.application).inflate(R.layout.vp_header, null);
 		mXListView.addHeaderView(view);
-		mViewPager = (ViewPager)view.findViewById(R.id.vp_banner);
+		mViewPager = (ViewPager) view.findViewById(R.id.vp_banner);
 		mPointGroup = (LinearLayout) view.findViewById(R.id.ll_point_group);
 		
 	}
@@ -122,10 +119,8 @@ public class NewsActivity extends Activity implements XListView.IXListViewListen
 	 * 初始化数据
 	 */
 	private void initData() {
-	
 		getNewsList();
 		getBanners();
-		
 	}
 	
 	/**
@@ -160,8 +155,8 @@ public class NewsActivity extends Activity implements XListView.IXListViewListen
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				
-				Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
-				intent.putExtra("id", mNews.get(position-2).getId() + "");
+				Intent intent = new Intent(MyApp.application, NewsDetailActivity.class);
+				intent.putExtra("id", mNews.get(position - 2).getId() + "");
 				startActivity(intent);
 			}
 		});
@@ -200,16 +195,16 @@ public class NewsActivity extends Activity implements XListView.IXListViewListen
 				}
 				
 				long currentTime = SystemClock.currentThreadTimeMillis();
-				delayStart(currentTime,mPreTime, true);
+				delayStart(currentTime, mPreTime, true);
 			}
 			
 			@Override
 			public void onGetResponseError(int requestCode, VolleyError error) {
 				long currentTime = SystemClock.currentThreadTimeMillis();
-				delayStart(currentTime, mPreTime,false);
+				delayStart(currentTime, mPreTime, false);
 			}
 		});
-		delayStart(0, 3000,true);
+		delayStart(0, 3000, true);
 	}
 	
 	/**
@@ -251,10 +246,22 @@ public class NewsActivity extends Activity implements XListView.IXListViewListen
 	
 	/**
 	 * 获取当前时间
+	 *
 	 * @return 时间字符串
 	 */
 	private String getTime() {
 		return new SimpleDateFormat("MM-dd HH:mm", Locale.CHINA).format(new Date());
+	}
+	
+	@Override
+	protected void onInvisible() {
+		delayStart(0, 3000, true);
+		mHandler.removeCallbacksAndMessages(null);
+	}
+	
+	@Override
+	protected void onVisible() {
+		mHandler.sendEmptyMessageDelayed(POINT_CHANGE, CHANG_TIME);
 	}
 	
 	/**
@@ -266,6 +273,7 @@ public class NewsActivity extends Activity implements XListView.IXListViewListen
 		public int getCount() {
 			return mNews.size();
 		}
+		
 		@Override
 		public NewsListBean.NewsBean getItem(int position) {
 			return mNews.get(position);
@@ -280,7 +288,7 @@ public class NewsActivity extends Activity implements XListView.IXListViewListen
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {
-				convertView = View.inflate(NewsActivity.this, R.layout.item_newslist, null);
+				convertView = View.inflate(MyApp.application, R.layout.item_newslist, null);
 				holder = new ViewHolder();
 				holder.newImg = (ImageView) convertView.findViewById(R.id.iv_new);
 				holder.newTitle = (TextView) convertView.findViewById(R.id.tv_title);
@@ -296,18 +304,20 @@ public class NewsActivity extends Activity implements XListView.IXListViewListen
 					R.mipmap.ic_launcher, R.mipmap.ic_launcher);
 			
 			HttpLoader.getImageLoader().get(serverUrl + mNews.get(position).getSummary_image(), imageListener,
-					DensityUtil.dip2px(NewsActivity.this,120),DensityUtil.dip2px(NewsActivity.this,100));
+					DensityUtil.dip2px(MyApp.application, 120), DensityUtil.dip2px(MyApp.application, 100));
 			
 			return convertView;
 		}
 		
 	}
+	
 	private static class ViewHolder {
 		
 		ImageView newImg;
 		TextView newTitle;
 		TextView newDetail;
 	}
+	
 	/**
 	 * 延时打开取消刷新
 	 */
@@ -316,16 +326,10 @@ public class NewsActivity extends Activity implements XListView.IXListViewListen
 		msg.what = CANCEL_REFRESHING;
 		msg.obj = flag;
 		if ((curTime - preTime) < 1500) {
-			mHandler.sendMessageDelayed(msg,1500 - (curTime - preTime));
+			mHandler.sendMessageDelayed(msg, 1500 - (curTime - preTime));
 		} else {
 			mHandler.sendMessage(msg);
 		}
-	}
-	
-	@Override
-	protected void onDestroy() {
-		mHandler.removeCallbacksAndMessages(null);
-		super.onDestroy();
 	}
 	
 	
@@ -338,6 +342,7 @@ public class NewsActivity extends Activity implements XListView.IXListViewListen
 		public int getCount() {
 			return Integer.MAX_VALUE;
 		}
+		
 		@Override
 		public boolean isViewFromObject(View view, Object object) {
 			return view == object;
@@ -345,16 +350,16 @@ public class NewsActivity extends Activity implements XListView.IXListViewListen
 		
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
-			ImageView imageView = new ImageView(NewsActivity.this);
+			ImageView imageView = new ImageView(MyApp.application);
 			imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-
+			
 			ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(imageView,
 					R.mipmap.ic_launcher, R.mipmap.ic_launcher);
 			
 			HttpLoader.getImageLoader().get(serverUrl + mBanners.get(position % mBanners.size()).getPath(), imageListener);
 			container.addView(imageView);
 			return imageView;
-
+			
 		}
 		
 		@Override
@@ -363,6 +368,7 @@ public class NewsActivity extends Activity implements XListView.IXListViewListen
 		}
 		
 	}
+	
 	/**
 	 * Banner触摸事件, 触摸停止轮播, 松开继续
 	 */
@@ -397,13 +403,13 @@ public class NewsActivity extends Activity implements XListView.IXListViewListen
 		View view;
 		for (int i = 0; i < mBanners.size(); i++) {
 			// 每循环一次需要向LinearLayout中添加一个点的view对象
-			view = new View(this);
+			view = new View(MyApp.application);
 			view.setBackgroundResource(R.drawable.point_bg);
 			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-					DensityUtil.dip2px(this, 8), DensityUtil.dip2px(this, 8));
+					DensityUtil.dip2px(MyApp.application, 8), DensityUtil.dip2px(MyApp.application, 8));
 			if (i != 0) {
 				// 当前不是第一个点,需要设置左边距
-				params.leftMargin = DensityUtil.dip2px(this, 6);
+				params.leftMargin = DensityUtil.dip2px(MyApp.application, 6);
 			}
 			view.setLayoutParams(params);
 			view.setEnabled(false);
@@ -416,29 +422,5 @@ public class NewsActivity extends Activity implements XListView.IXListViewListen
 		mHandler.sendEmptyMessageDelayed(POINT_CHANGE, CHANG_TIME);
 	}
 	
-	long exitTime = 0;
-	@Override
-	public void onBackPressed() {
-		if ((System.currentTimeMillis() - exitTime) > 2000) {
-			Toast.makeText(this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
-			exitTime = System.currentTimeMillis();
-			return;
-		}
-//        moveTaskToBack(false);
-		super.onBackPressed();
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		MobclickAgent.onResume(this);
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		delayStart(0, 3000,true);
-		MobclickAgent.onPause(this);
-	}
 }
 
