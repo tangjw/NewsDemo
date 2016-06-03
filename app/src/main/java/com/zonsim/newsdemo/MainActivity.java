@@ -28,6 +28,7 @@ import com.zonsim.newsdemo.bean.BaseResponseBean;
 import com.zonsim.newsdemo.bean.NewsListBean;
 import com.zonsim.newsdemo.net.HttpLoader;
 import com.zonsim.newsdemo.utils.DensityUtil;
+import com.zonsim.newsdemo.utils.MyToast;
 import com.zonsim.newsdemo.widght.XListView;
 
 import java.text.SimpleDateFormat;
@@ -65,7 +66,7 @@ public class MainActivity extends Activity implements XListView.IXListViewListen
 			switch (msg.what) {
 			case CANCEL_REFRESHING:
 				if (!(Boolean) msg.obj) {
-					Toast.makeText(MainActivity.this, "网络出错了", Toast.LENGTH_SHORT).show();
+					MyToast.show(MainActivity.this, "网络出错了");
 				}
 				onLoad();
 				break;

@@ -156,7 +156,7 @@ public class XFooterView extends LinearLayout {
     }
 
     /**
-     * show footer
+     * showToast footer
      */
     public void show() {
         LayoutParams lp = (LayoutParams) mLayout.getLayoutParams();

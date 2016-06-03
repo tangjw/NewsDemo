@@ -58,7 +58,6 @@ public class NewsDetailActivity extends Activity {
 			@Override
 			public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
 				super.onReceivedError(view, request, error);
-//				Toast.makeText(NewsDetailActivity.this, "网络出错了", Toast.LENGTH_SHORT).show();
 				mWebView.setVisibility(View.GONE);
 				mNetError.setVisibility(View.VISIBLE);
 			}
