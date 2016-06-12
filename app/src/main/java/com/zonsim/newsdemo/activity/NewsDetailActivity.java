@@ -62,6 +62,7 @@ public class NewsDetailActivity extends Activity {
 			@Override
 			public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
 				super.onReceivedError(view, request, error);
+				System.out.println("hhhhh");
 				mWebView.setVisibility(View.GONE);
 				mNetError.setVisibility(View.VISIBLE);
 			}
