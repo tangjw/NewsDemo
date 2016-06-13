@@ -1,6 +1,5 @@
 package com.zonsim.newsdemo.chat;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 
 import com.easemob.EMCallBack;
@@ -20,9 +19,6 @@ import com.zonsim.newsdemo.utils.MyToast;
  * Created by tang-jw on 5/9.
  */
 public class LoginActivity extends BaseActivity {
-	
-	private boolean progressShow;
-	private ProgressDialog progressDialog;
 	
 	@Override
 	protected int initContentView() {

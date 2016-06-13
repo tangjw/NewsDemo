@@ -4,11 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.easemob.chat.EMMessage;
@@ -39,30 +36,9 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 	public static final int REQUEST_CODE_SHORTCUT = 27;
 	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return super.onCreateView(inflater, container, savedInstanceState);
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		//在父类中调用了initView和setUpView两个方法
-		super.onActivityCreated(savedInstanceState);
-	}
-
-	@Override
 	protected void setUpView() {
 		setChatFragmentListener(this);
 		super.setUpView();
-	}
-
-	@Override
-	protected void registerExtendMenuItem() {
-		// demo这里不覆盖基类已经注册的item,item点击listener沿用基类的
-		super.registerExtendMenuItem();
-//		//增加扩展item
-//		inputMenu.registerExtendMenuItem(R.string.attach_file, R.drawable.em_chat_file_selector, ITEM_FILE, extendMenuItemClickListener);
-//		// 增加扩展item
-//		inputMenu.registerExtendMenuItem(R.string.attach_short_cut_message, R.drawable.em_icon_answer, ITEM_SHORT_CUT_MESSAGE, extendMenuItemClickListener);
 	}
 
 	@SuppressLint("NewApi")
@@ -162,24 +138,6 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
 		@Override
 		public int getCustomChatRowType(EMMessage message) {
-//			if (message.getType() == EMMessage.Type.TXT) {
-//				if (DemoHelper.getInstance().isRobotMenuMessage(message)) {
-//					// 机器人 列表菜单
-//					return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_ROBOT_MENU
-//							: MESSAGE_TYPE_SENT_ROBOT_MENU;
-//				} else if (DemoHelper.getInstance().isEvalMessage(message)) {
-//					// 满意度评价
-//					return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_EVAL : MESSAGE_TYPE_SENT_EVAL;
-//				} else if (DemoHelper.getInstance().isPictureTxtMessage(message)) {
-//					// 订单图文组合
-//					return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_PICTURE_TXT
-//							: MESSAGE_TYPE_SENT_PICTURE_TXT;
-//				} else if(DemoHelper.getInstance().isTransferToKefuMsg(message)){
-//					//转人工消息
-//					return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TRANSFER_TO_KEFU
-//							: MESSAGE_TYPE_SENT_TRANSFER_TO_KEFU;
-//				}
-//			}
 			return 0;
 		}
 
@@ -209,6 +167,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 				choiceJson.put("menuid", menuId);
 				msgTypeJson.put("choice", choiceJson);
 			} catch (Exception e) {
+				
 			}
 			message.setAttribute("msgtype", msgTypeJson);
 		}

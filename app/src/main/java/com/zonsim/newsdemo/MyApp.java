@@ -6,6 +6,8 @@ import com.easemob.chat.EMChat;
 import com.zonsim.newsdemo.chat.DemoHelper;
 import com.zonsim.newsdemo.chat.utils.HelpDeskPreferenceUtils;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * application 初始化Logger
  * Created by tang-jw on 2016/5/26.
@@ -25,5 +27,9 @@ public class MyApp extends Application {
 		
 		//init demo helper
 		DemoHelper.getInstance().init(application);
+		
+		//初始化 JPush
+		JPushInterface.setDebugMode(false);
+		JPushInterface.init(this);
 	}
 }

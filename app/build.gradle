@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
-    
+
     defaultConfig {
         applicationId "com.zonsim.newsdemo"
         minSdkVersion 15
@@ -23,19 +23,13 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
-    /*productFlavors {
-        
-        wandoujia {}
-        baidu {}
-        _360 {}
-        uc {}
-        
+
+    productFlavors {
+        zsm {}
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
         }
-        
-    }*/
-    
+    }
 }
 
 dependencies {

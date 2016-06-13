@@ -11,10 +11,6 @@ import com.zonsim.newsdemo.MyApp;
 import com.zonsim.newsdemo.R;
 import com.zonsim.newsdemo.chat.LoginActivity;
 
-
-/**
- * Created by o_o on 4/16.
- */
 public class UserPager extends BaseFragment {
 	
 	private LinearLayout mShare;
