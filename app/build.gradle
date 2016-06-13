@@ -17,7 +17,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    productFlavors {
+
+    sourceSets {
+        main() {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    /*productFlavors {
         
         wandoujia {}
         baidu {}
@@ -28,7 +34,7 @@ android {
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
         }
         
-    }
+    }*/
     
 }
 
@@ -41,4 +47,5 @@ dependencies {
     compile 'com.umeng.analytics:analytics:6.0.1'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile project(':easeui')
+    compile files('libs/jpush-android-2.1.5.jar')
 }
