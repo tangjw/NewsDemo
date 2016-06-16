@@ -45,7 +45,8 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 	
 	private String serverUrl = "http://118.145.26.215:8090/edu";
 	private String newsUrl = "http://118.145.26.215:8090/edu/lianyi/EduNews/querySummary.do";
-	private String bannerUrl = "http://118.145.26.215:8090/edu/lianyi/EduBanner/listAjax.do";
+//	private String bannerUrl = "http://118.145.26.215:8090/edu/lianyi/EduBanner/listAjax.do";
+	private String bannerUrl = "http://192.168.1.233:8080/banner.txt";
 	private List<NewsListBean.NewsBean> mNews;
 	private long mPreTime;
 	
@@ -84,7 +85,7 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View contentView = inflater.inflate(R.layout.pager1_news, null);
+		View contentView = inflater.inflate(R.layout.pager1_news, container,false);
 		initView(contentView);
 		initData();
 		initListener();
@@ -223,8 +224,9 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 					} else {
 						mMyPagerAdapter.notifyDataSetChanged();
 					}
-					
-					initPoint();
+					if (mBanners.size() > 1) {
+						initPoint();
+					}
 				}
 			}
 			
@@ -256,7 +258,8 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 	@Override
 	protected void onInvisible() {
 		delayStart(0, 3000, true);
-		mHandler.removeCallbacksAndMessages(null);
+//		mHandler.removeCallbacksAndMessages(null);
+		mHandler.removeMessages(POINT_CHANGE);
 	}
 	
 	@Override
@@ -340,7 +343,8 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 		
 		@Override
 		public int getCount() {
-			return Integer.MAX_VALUE;
+//			return Integer.MAX_VALUE;
+			return mBanners.size() < 2 ? mBanners.size() : Integer.MAX_VALUE;
 		}
 		
 		@Override
@@ -355,8 +359,7 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 			
 			ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(imageView,
 					R.mipmap.ic_launcher, R.mipmap.ic_launcher);
-			
-			HttpLoader.getImageLoader().get(serverUrl + mBanners.get(position % mBanners.size()).getPath(), imageListener);
+				HttpLoader.getImageLoader().get(serverUrl + mBanners.get(position % mBanners.size()).getPath(), imageListener);
 			container.addView(imageView);
 			return imageView;
 			
@@ -417,8 +420,10 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 			
 		}
 		
+//		int half = isFast?getRealCount()*3:Integer.MAX_VALUE/2;
+		
 		mPointGroup.getChildAt(prePosition).setEnabled(true);
-		mHandler.removeCallbacksAndMessages(null);
+		mHandler.removeMessages(POINT_CHANGE);
 		mHandler.sendEmptyMessageDelayed(POINT_CHANGE, CHANG_TIME);
 	}
 	
