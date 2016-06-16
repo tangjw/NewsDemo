@@ -45,7 +45,7 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 	
 	private String serverUrl = "http://118.145.26.215:8090/edu";
 	private String newsUrl = "http://118.145.26.215:8090/edu/lianyi/EduNews/querySummary.do";
-//	private String bannerUrl = "http://118.145.26.215:8090/edu/lianyi/EduBanner/listAjax.do";
+	//	private String bannerUrl = "http://118.145.26.215:8090/edu/lianyi/EduBanner/listAjax.do";
 	private String bannerUrl = "http://192.168.1.233:8080/banner.txt";
 	private List<NewsListBean.NewsBean> mNews;
 	private long mPreTime;
@@ -85,7 +85,7 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View contentView = inflater.inflate(R.layout.pager1_news, container,false);
+		View contentView = inflater.inflate(R.layout.pager1_news, container, false);
 		initView(contentView);
 		initData();
 		initListener();
@@ -137,6 +137,7 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 			
 			@Override
 			public void onPageSelected(int position) {
+				
 				int newPosition = position % mBanners.size();
 				// 把当前选中的点给切换了换
 				mPointGroup.getChildAt(prePosition).setEnabled(false);
@@ -359,7 +360,7 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 			
 			ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(imageView,
 					R.mipmap.ic_launcher, R.mipmap.ic_launcher);
-				HttpLoader.getImageLoader().get(serverUrl + mBanners.get(position % mBanners.size()).getPath(), imageListener);
+			HttpLoader.getImageLoader().get(serverUrl + mBanners.get(position % mBanners.size()).getPath(), imageListener);
 			container.addView(imageView);
 			return imageView;
 			
@@ -419,10 +420,11 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 			mPointGroup.addView(view);
 			
 		}
-		
+
 //		int half = isFast?getRealCount()*3:Integer.MAX_VALUE/2;
-		
+		mViewPager.setCurrentItem(Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % mBanners.size());
 		mPointGroup.getChildAt(prePosition).setEnabled(true);
+//		mHandler.removeCallbacksAndMessages(null);
 		mHandler.removeMessages(POINT_CHANGE);
 		mHandler.sendEmptyMessageDelayed(POINT_CHANGE, CHANG_TIME);
 	}
