@@ -39,7 +39,7 @@ public class NewsDetailActivity extends Activity {
 		mWebView.loadUrl("http://118.145.26.215:8090/edu/lianyi/EduNews/everyNewsDetail.do?Id="+id);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //		    this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-			this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//			this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 		}
 	}
 	

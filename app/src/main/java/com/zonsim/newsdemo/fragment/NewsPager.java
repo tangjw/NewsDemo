@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -45,8 +44,8 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 	
 	private String serverUrl = "http://118.145.26.215:8090/edu";
 	private String newsUrl = "http://118.145.26.215:8090/edu/lianyi/EduNews/querySummary.do";
-	//	private String bannerUrl = "http://118.145.26.215:8090/edu/lianyi/EduBanner/listAjax.do";
-	private String bannerUrl = "http://192.168.1.233:8080/banner.txt";
+//	private String bannerUrl = "http://118.145.26.215:8090/edu/lianyi/EduBanner/listAjax.do";
+		private String bannerUrl = "http://192.168.1.233:8080/android/banners.json";
 	private List<NewsListBean.NewsBean> mNews;
 	private long mPreTime;
 	
@@ -167,8 +166,9 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 	
 	@Override
 	public void onRefresh() {
-		mPreTime = SystemClock.currentThreadTimeMillis();
-		getBanners();
+		mPreTime = System.currentTimeMillis();
+//		System.out.println(System.c);
+//		getBanners();
 		getNewsList();
 	}
 	
@@ -196,13 +196,13 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 					}
 				}
 				
-				long currentTime = SystemClock.currentThreadTimeMillis();
+				long currentTime = System.currentTimeMillis();
 				delayStart(currentTime, mPreTime, true);
 			}
 			
 			@Override
 			public void onGetResponseError(int requestCode, VolleyError error) {
-				long currentTime = SystemClock.currentThreadTimeMillis();
+				long currentTime = System.currentTimeMillis();
 				delayStart(currentTime, mPreTime, false);
 			}
 		});
@@ -424,7 +424,7 @@ public class NewsPager extends BaseFragment implements XListView.IXListViewListe
 //		int half = isFast?getRealCount()*3:Integer.MAX_VALUE/2;
 		mViewPager.setCurrentItem(Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % mBanners.size());
 		mPointGroup.getChildAt(prePosition).setEnabled(true);
-//		mHandler.removeCallbacksAndMessages(null);
+		mHandler.removeCallbacksAndMessages(null);
 		mHandler.removeMessages(POINT_CHANGE);
 		mHandler.sendEmptyMessageDelayed(POINT_CHANGE, CHANG_TIME);
 	}
